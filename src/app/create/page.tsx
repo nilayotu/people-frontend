@@ -1,15 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { createPerson } from "@/lib/api";
 
 export default function CreatePage() {
   const [formData, setFormData] = useState({ name: "", email: "", rank: "" });
   const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("text-black");
-
-  const currentUserId = "123";
-  const currentUserRank = 3;
+  const [messageColor, setMessageColor] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,32 +14,23 @@ export default function CreatePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const rankNum = Number(formData.rank);
-    if (rankNum < 1 || rankNum > 10) {
-      setMessage("Rank must be between 1 and 10");
-      setMessageColor("text-red-500");
-      return;
-    }
-    if (rankNum <= currentUserRank) {
-      setMessage("You can only create users with rank lower than yours");
-      setMessageColor("text-red-500");
-      return;
-    }
+    const rankNum = parseInt(formData.rank);
 
     try {
-      const res = await createPerson({ ...formData, rank: rankNum }, currentUserId);
-      setMessage(res.message);
+      // Burada manuel userId ekliyoruz
+      const res = await createPerson({ ...formData, rank: rankNum }, "123");
+      setMessage("User created successfully!");
       setMessageColor("text-green-600");
       setFormData({ name: "", email: "", rank: "" });
-    } catch (err: any) {
-      setMessage(err.response?.data?.message || "Error occurred");
+    } catch (err) {
+      setMessage("Error occurred while creating user");
       setMessageColor("text-red-500");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 p-4">
+      <h1 className="text-2xl font-bold mb-6 text-center">Create User</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-[200px] md:w-[400px] bg-white p-6 rounded-xl shadow-lg"

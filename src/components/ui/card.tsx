@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 interface Person {
@@ -13,28 +15,20 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ person }) => {
-  const borderColor = person.rank < 5 ? "green" : "red";
+  const borderColor = person.rank < 5 ? "border-green-500" : "border-red-500";
 
   return (
     <div
-      style={{
-        border: `4px solid ${borderColor}`,
-        padding: "10px",
-        margin: "10px",
-        width: "200px",
-        textAlign: "center"
-      }}
-    >
-      <img
-        src={person.image || "/placeholder.png"}
-        alt={person.name}
-        width={100}
-        height={100}
-        style={{objectFit: "cover" }}
-      />
-      <h3>{person.name}</h3>
-      <p>{person.email}</p>
-    </div>
+  className={`border-4 ${borderColor} p-4 w-48 sm:w-64 md:w-72 flex-shrink-0 text-center shadow-md`}
+>
+  <img
+    src={person.image || "/placeholder.png"}
+    alt={person.name}
+    className="w-24 h-24 mx-auto mb-2 object-cover rounded-full"
+  />
+  <h3 className="text-lg font-semibold truncate">{person.name}</h3>
+  <p className="text-sm text-gray-600 truncate">{person.email}</p>
+</div>
   );
 };
 

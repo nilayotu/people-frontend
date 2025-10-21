@@ -15,17 +15,17 @@ export default async function ListPage() {
   try {
     people = await getPeople();
   } catch (err) {
-    return <p style={{ color: "red" }}>Failed to load people</p>;
+    return <p className="text-red-500">Failed to load people</p>;
   }
 
   return (
-    <div>
-      <h1>People List</h1>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {people.map((person) => (
-          <Card key={person.id} person={person} />
-        ))}
-      </div>
-    </div>
+    <div className="max-w-6xl mx-auto p-4">
+  <h1 className="text-2xl font-bold mb-4 text-center">People List</h1>
+  <div className="flex flex-wrap gap-4 justify-center">
+    {people.map((person) => (
+      <Card key={person.id} person={person} />
+    ))}
+  </div>
+</div>
   );
 }
