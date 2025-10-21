@@ -17,7 +17,7 @@ export default function CreatePage() {
     const rankNum = parseInt(formData.rank);
 
     try {
-      // Burada manuel userId ekliyoruz
+
       const res = await createPerson({ ...formData, rank: rankNum }, "123");
       setMessage("User created successfully!");
       setMessageColor("text-green-600");
